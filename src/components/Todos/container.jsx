@@ -43,8 +43,24 @@ class Todos extends React.Component {
     })
   }
 
-  handleCheckTodo = () => {
-    // TODO: Write your logic for check todo here
+  handleCheckTodo = (e, todoId) => {
+    const { todos } = this.state;
+
+    if (e.target.checked === true) {
+      todos.forEach(item => {
+        if (item.id === todoId) {
+          item["checked"] = true;
+          e.target.parentElement.classList.add('complete');
+        }
+      })
+    } else {
+      todos.forEach(item => {
+        if (item.id === todoId) {
+          item["checked"] = false;
+          e.target.parentElement.classList.remove('complete');
+        }
+      })
+    }
   }
 
   get isTodosEmpty() {
@@ -64,6 +80,7 @@ class Todos extends React.Component {
         onEnterTodo={this.handleEnterTodo}
         onAddTodo={this.handleAddTodo}
         onRemoveTodo={this.handleRemoveTodo}
+        onCheckTodo={this.handleCheckTodo}
       />
     )
   }

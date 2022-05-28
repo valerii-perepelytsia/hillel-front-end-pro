@@ -8,6 +8,10 @@
     margin-right: 5px;
   }
 
+  .complete {
+    text-decoration: line-through;
+  }
+
   &:last-child {
     margin-bottom: 0;
   }
