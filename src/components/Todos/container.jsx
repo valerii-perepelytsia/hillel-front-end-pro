@@ -43,24 +43,22 @@ class Todos extends React.Component {
     })
   }
 
-  handleCheckTodo = (e, todoId) => {
-    const { todos } = this.state;
+  handleCheckTodo = todoId => {
+    const {todos} = this.state;
 
-    if (e.target.checked === true) {
-      todos.forEach(item => {
-        if (item.id === todoId) {
-          item["checked"] = true;
-          e.target.parentElement.classList.add('complete');
+    const updatedTodos = todos.map(todo => {
+      if (todoId === todo.id) {
+        return {
+          ...todo,
+          checked: !todo.checked,
         }
-      })
-    } else {
-      todos.forEach(item => {
-        if (item.id === todoId) {
-          item["checked"] = false;
-          e.target.parentElement.classList.remove('complete');
-        }
-      })
-    }
+      }
+      return todo;
+    });
+
+    this.setState({
+      todos: updatedTodos
+    })
   }
 
   get isTodosEmpty() {
