@@ -1,0 +1,30 @@
+.squares {
+  &__square-container {
+    display: flex;
+    width: 33.333%;
+    padding: 0 15px 30px;
+  }
+
+  &__article {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #3098F3;
+    padding: 30px 40px;
+  }
+
+  &__digit {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    padding: 10px 50px;
+  }
+}
