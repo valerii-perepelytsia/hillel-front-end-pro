@@ -9,7 +9,7 @@ const Item = ({ id, value, checked, onRemoveTodo, onCheckTodo }) => (
         className="check"
         type="checkbox"
         checked={checked}
-        onClick={() => onCheckTodo(id)}
+        onChange={() => onCheckTodo(id)}
       />
       {value}
     </div>
