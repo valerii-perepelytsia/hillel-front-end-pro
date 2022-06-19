@@ -1,87 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {connect} from "react-redux";
+
+import {add_todo, remove_todo, check_todo} from "../../store/todos/actions";
+import {selectTodosLength, selectTodos} from "../../store/todos/selectors";
 
 import TodosComponent from "./component";
 
 import './styles.scss';
 
-class Todos extends React.Component {
-  constructor(props) {
-    super(props);
+const Todos = ({add_todo, remove_todo, check_todo, todosLength, todos}) => {
+  const [enterTodo, setEnterTodo] = useState('');
 
-    this.state = {
-      enterTodo: '',
-      todos: [],
-    };
+  const handleEnterTodo = e => {
+    setEnterTodo(e.target.value);
   }
 
-  handleEnterTodo = e => {
-    this.setState({ enterTodo: e.target.value });
-  }
-
-  handleAddTodo = () => {
-    const { enterTodo, todos } = this.state;
-
+  const handleAddTodo = () => {
     const newTodo = {
       id: Math.round(Math.random() * 100),
       value: enterTodo,
       checked: false,
     }
 
-    this.setState({
-      enterTodo: '',
-      todos: [...todos, newTodo]
-    })
+    setEnterTodo('');
+    add_todo(newTodo);
   }
 
-  handleRemoveTodo = todoId => {
-    const { todos } = this.state;
-
-    const updatedTodos = todos.filter(todo => todoId !== todo.id);
-
-    this.setState({
-      todos: updatedTodos
-    })
+  const handleRemoveTodo = todoId => {
+    remove_todo(todoId);
   }
 
-  handleCheckTodo = todoId => {
-    const {todos} = this.state;
-
-    const updatedTodos = todos.map(todo => {
-      if (todoId === todo.id) {
-        return {
-          ...todo,
-          checked: !todo.checked,
-        }
-      }
-      return todo;
-    });
-
-    this.setState({
-      todos: updatedTodos
-    })
+  const handleCheckTodo = todoId => {
+    check_todo(todoId);
   }
 
-  get isTodosEmpty() {
-    const { todos } = this.state;
+  const isTodosEmpty = todosLength === 0;
 
-    return todos.length === 0;
-  }
-
-  render = () => {
-    const { enterTodo, todos } = this.state;
-
-    return (
+  return (
       <TodosComponent
-        enterTodo={enterTodo}
-        todos={todos}
-        isTodosEmpty={this.isTodosEmpty}
-        onEnterTodo={this.handleEnterTodo}
-        onAddTodo={this.handleAddTodo}
-        onRemoveTodo={this.handleRemoveTodo}
-        onCheckTodo={this.handleCheckTodo}
+          enterTodo={enterTodo}
+          todos={todos}
+          isTodosEmpty={isTodosEmpty}
+          onEnterTodo={handleEnterTodo}
+          onAddTodo={handleAddTodo}
+          onRemoveTodo={handleRemoveTodo}
+          onCheckTodo={handleCheckTodo}
       />
-    )
-  }
+  )
 }
 
-export default Todos;
+const mapStateToProps = state => ({
+  todosLength: selectTodosLength(state),
+  todos: selectTodos(state),
+});
+
+const mapDispatchToProps = {
+  add_todo,
+  remove_todo,
+  check_todo,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);

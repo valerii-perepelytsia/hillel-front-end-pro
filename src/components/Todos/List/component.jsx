@@ -17,6 +17,7 @@ const List = ({ todos, onRemoveTodo, onCheckTodo }) => (
                 onCheckTodo={onCheckTodo}/>
             : ""
       ))}
+    <div>{todos.checked}</div>
   </ul>
 )
 

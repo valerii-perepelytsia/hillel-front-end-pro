@@ -4,8 +4,7 @@ import './styles.scss';
 
 const Item = ({ id, value, checked, onRemoveTodo, onCheckTodo }) => (
   <li className="item">
-    <div className={checked ? "complete" : "value"}
-         onClick={() => onCheckTodo(id)}>
+    <div className={checked ? "complete" : "value"}>
       <input
         className="check"
         type="checkbox"
